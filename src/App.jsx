@@ -1,71 +1,71 @@
+import { useState } from 'react'
+import CityNavbar from './components/CityNavbar'
+import Onboarding from './components/Onboarding'
+import Auth from './components/Auth'
+import Home from './components/Home'
+import SplitPayment from './components/SplitPayment'
+import Suggestions from './components/Suggestions'
+import AddCard from './components/AddCard'
+import Transactions from './components/Transactions'
+import Rewards from './components/Rewards'
+import Settings from './components/Settings'
+
 function App() {
+  const [screen, setScreen] = useState('onboarding')
+
+  const navigate = (key) => {
+    if (key === 'split') setScreen('split')
+    if (key === 'suggest') setScreen('suggestions')
+    if (key === 'rewards') setScreen('rewards')
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.05),transparent_50%)]"></div>
+    <div className="min-h-screen bg-slate-950">
+      <CityNavbar />
 
-      <div className="relative min-h-screen flex items-center justify-center p-8">
-        <div className="max-w-2xl w-full">
-          {/* Header with Flames icon */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center mb-6">
-              <img
-                src="/flame-icon.svg"
-                alt="Flames"
-                className="w-24 h-24 drop-shadow-[0_0_25px_rgba(59,130,246,0.5)]"
-              />
-            </div>
+      {screen === 'onboarding' && (
+        <Onboarding onContinue={() => setScreen('auth')} />
+      )}
 
-            <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
-              Flames Blue
-            </h1>
+      {screen === 'auth' && (
+        <Auth onLogin={() => setScreen('home')} />
+      )}
 
-            <p className="text-xl text-blue-200 mb-6">
-              Build applications through conversation
-            </p>
-          </div>
+      {screen === 'home' && (
+        <Home onNavigate={navigate} />
+      )}
 
-          {/* Instructions */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-blue-500/20 rounded-2xl p-8 shadow-xl mb-6">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                1
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Describe your idea</h3>
-                <p className="text-blue-200/80 text-sm">Use the chat panel on the left to tell the AI what you want to build</p>
-              </div>
-            </div>
+      {screen === 'split' && <SplitPayment />}
+      {screen === 'suggestions' && <Suggestions />}
+      {screen === 'addcard' && <AddCard />}
+      {screen === 'transactions' && <Transactions />}
+      {screen === 'rewards' && <Rewards />}
+      {screen === 'settings' && <Settings />}
 
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                2
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Watch it build</h3>
-                <p className="text-blue-200/80 text-sm">Your app will appear in this preview as the AI generates the code</p>
+      {/* Bottom nav */}
+      {['home','split','suggestions','addcard','transactions','rewards','settings'].includes(screen) && (
+        <div className="fixed bottom-4 left-0 right-0 z-40">
+          <div className="mx-auto max-w-md px-4">
+            <div className="backdrop-blur-xl bg-slate-900/60 border border-cyan-400/20 rounded-2xl shadow-[0_0_40px_rgba(59,130,246,0.25)]">
+              <div className="grid grid-cols-7 text-center text-cyan-200/80 text-xs">
+                {[
+                  ['home','Home'],
+                  ['split','Split'],
+                  ['suggestions','AI'],
+                  ['addcard','Card'],
+                  ['transactions','History'],
+                  ['rewards','Rewards'],
+                  ['settings','Settings']
+                ].map(([key,label]) => (
+                  <button key={key} onClick={() => setScreen(key)} className={`py-3 ${screen===key ? 'text-cyan-300' : ''}`}>
+                    {label}
+                  </button>
+                ))}
               </div>
             </div>
-
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                3
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Refine and iterate</h3>
-                <p className="text-blue-200/80 text-sm">Continue the conversation to add features and make changes</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="text-center">
-            <p className="text-sm text-blue-300/60">
-              No coding required • Just describe what you want
-            </p>
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
