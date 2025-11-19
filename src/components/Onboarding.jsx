@@ -1,11 +1,25 @@
+import { useEffect, useState } from 'react'
 import Spline from '@splinetool/react-spline'
 import { motion } from 'framer-motion'
+import Loader from './Loader'
 
 export default function Onboarding({ onContinue }) {
+  const [loaded, setLoaded] = useState(false)
+
+  // Safety timeout in case onLoad isn't fired
+  useEffect(() => {
+    const t = setTimeout(() => setLoaded(true), 4000)
+    return () => clearTimeout(t)
+  }, [])
+
   return (
     <div className="relative min-h-screen text-cyan-100">
       <div className="absolute inset-0">
-        <Spline scene="https://prod.spline.design/qQUip0dJPqrrPryE/scene.splinecode" style={{ width: '100%', height: '100%' }} />
+        <Spline
+          scene="https://prod.spline.design/qQUip0dJPqrrPryE/scene.splinecode"
+          style={{ width: '100%', height: '100%' }}
+          onLoad={() => setLoaded(true)}
+        />
       </div>
 
       {/* Gradient overlays for depth */}
@@ -43,6 +57,8 @@ export default function Onboarding({ onContinue }) {
           </motion.button>
         </motion.div>
       </div>
+
+      {!loaded && <Loader label="Warming up neon streets..." />}
     </div>
   )
 }

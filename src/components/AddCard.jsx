@@ -1,7 +1,14 @@
 import { motion } from 'framer-motion'
 import { CreditCard } from 'lucide-react'
+import { useToast } from './ToastSystem'
 
 export default function AddCard() {
+  const { push } = useToast()
+
+  const handleSave = () => {
+    push('Card added', 'Your blue-flame card is now ready to use.')
+  }
+
   return (
     <div className="relative min-h-screen text-cyan-100 px-6 pt-24 pb-24 max-w-md mx-auto">
       <div className="rounded-3xl border border-cyan-400/30 bg-slate-900/50 backdrop-blur-xl p-6 shadow-[0_0_60px_rgba(34,211,238,0.25)]">
@@ -30,7 +37,7 @@ export default function AddCard() {
           <input className="bg-slate-900/60 border border-cyan-400/30 rounded-xl px-3 py-3 text-cyan-100 placeholder:text-cyan-300/40 focus:outline-none focus:ring-2 focus:ring-cyan-400/40 col-span-2" placeholder="Name on Card" />
         </div>
 
-        <button className="mt-6 w-full py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium shadow-[0_10px_40px_rgba(59,130,246,0.45)] border border-cyan-400/30">Save Card</button>
+        <motion.button whileTap={{ scale: 0.98 }} onClick={handleSave} className="mt-6 w-full py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-medium shadow-[0_10px_40px_rgba(59,130,246,0.45)] border border-cyan-400/30">Save Card</motion.button>
       </div>
     </div>
   )
