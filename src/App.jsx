@@ -13,14 +13,15 @@ import Transactions from './components/Transactions'
 import Rewards from './components/Rewards'
 import Settings from './components/Settings'
 import NeonBackground from './components/NeonBackground'
+import ParallaxCity from './components/ParallaxCity'
 
 const ScreenWrapper = ({ children, screen }) => (
   <motion.div
     key={screen}
-    initial={{ opacity: 0, x: 30 }}
-    animate={{ opacity: 1, x: 0 }}
-    exit={{ opacity: 0, x: -20 }}
-    transition={{ duration: 0.25, ease: 'easeOut' }}
+    initial={{ opacity: 0, x: 24, filter: 'blur(2px)' }}
+    animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+    exit={{ opacity: 0, x: -18, filter: 'blur(2px)' }}
+    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
     className="relative"
   >
     {children}
@@ -41,7 +42,12 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-950">
       {/* Ambient neon layers behind content (except onboarding which is cinematic) */}
-      {screen !== 'onboarding' && <NeonBackground />}
+      {screen !== 'onboarding' && (
+        <>
+          <NeonBackground />
+          <ParallaxCity />
+        </>
+      )}
 
       <CityNavbar />
 

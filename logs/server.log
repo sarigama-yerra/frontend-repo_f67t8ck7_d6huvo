@@ -3,9 +3,7 @@
 > vite
 
 
-  VITE v5.4.20  ready in 211 ms
+  VITE v5.4.20  ready in 364 ms
 
   ➜  Local:   http://localhost:3000/
   ➜  Network: http://172.20.0.82:3000/
-4:03:07 PM [vite] ✨ new dependencies optimized: @radix-ui/react-toast
-4:03:07 PM [vite] ✨ optimized dependencies changed. reloading
